@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import urlShortener from './controller/url_shortener';
+import ErrorHandler from "./error-handler/error-handler";
 
 const app: Application = express();
 
@@ -13,6 +14,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/shorturl", urlShortener);
+app.use(ErrorHandler);
 
 app.listen(3001, () => {
 

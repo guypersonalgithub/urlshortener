@@ -1,5 +1,6 @@
 import dns from "dns";
 import dao from '../dao/dao';
+import ServerError from "../error-handler/server-error";
 
 let allURLS: any;
 
@@ -19,7 +20,7 @@ const shorturl = async(insertedURL: string) => {
 
         if (fullURL.hostname.length > 50 || fullURL.hostname.length == 0) {
 
-            throw new Error("Invalid url");
+            throw ServerError.invalidURL("You may only shorten urls that are 50 characters long or less");
 
         }
 
@@ -27,7 +28,7 @@ const shorturl = async(insertedURL: string) => {
     
             if (!address || !family) {
     
-                throw new Error("Invalid url");
+                throw ServerError.notFound("Url not found");
     
             }
     
@@ -46,7 +47,7 @@ const shorturl = async(insertedURL: string) => {
     }
     catch (err: any) {
 
-        throw new Error(err);
+        throw err;
 
     }
 
@@ -56,7 +57,7 @@ const redirectURL = async(insertedID: number) => {
 
     if (insertedID < 1 || insertedID > allURLS.length) {
 
-        throw new Error("Invalid url");
+        throw ServerError.notFound("Url not found.");
 
     }
 

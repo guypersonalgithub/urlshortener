@@ -4,7 +4,7 @@ import logic from '../logic/logic';
 
 const router = Router();
 
-router.post("/", async(req: Request, res: Response) => {
+router.post("/", async(req: Request, res: Response, next: NextFunction) => {
 
     try {
 
@@ -16,13 +16,13 @@ router.post("/", async(req: Request, res: Response) => {
 
     catch (err) {
 
-        res.json({error: "invalid url, please make sure to add http/https in the beginning of the url"});
+        next(err);
 
     }
 
 });
 
-router.get("/:shorturl", async(req, res) => {
+router.get("/:shorturl", async(req: Request, res: Response, next: NextFunction) => {
 
     try {
 
@@ -34,7 +34,7 @@ router.get("/:shorturl", async(req, res) => {
 
     catch (err) {
 
-        res.json(err);
+        next(err);
 
     }
 
