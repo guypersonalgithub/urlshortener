@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
-import {shorturl} from '../logic/logic';
+import https from "http";
+import logic from '../logic/logic';
 
 const router = Router();
 
@@ -8,8 +9,8 @@ router.post("/", async(req: Request, res: Response) => {
     try {
 
         const { url } = req.body;
-        const response = await shorturl(url);
-        res.send(response);
+        const response = await logic.shorturl(url);
+        res.send(`URL saved, new URL: ${req.headers.referer}api/shorturl/${response}`);
 
     }
 
