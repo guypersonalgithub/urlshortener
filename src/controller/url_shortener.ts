@@ -1,12 +1,23 @@
 import { Router, Request, Response, NextFunction } from "express";
+import {shorturl} from '../logic/logic';
 
 const router = Router();
 
-router.post("/", (req: Request, res: Response) => {
+router.post("/", async(req: Request, res: Response) => {
 
-    const { url } = req.body;
+    try {
 
-    res.json({result: url});
+        const { url } = req.body;
+        const response = await shorturl(url);
+        res.send(response);
+
+    }
+
+    catch (err) {
+
+        res.json({error: "invalid url, please make sure to add http/https in the beginning of the url"});
+
+    }
 
 })
 
