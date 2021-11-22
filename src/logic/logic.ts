@@ -35,6 +35,12 @@ const shorturl = async(insertedURL: string) => {
 
         const response = await dao.shorturl(insertedURL, allURLS.length + 1);
         
+        allURLS.push({
+            url_id: allURLS.length + 1,
+            old_url: insertedURL,
+            new_url: allURLS.length + 1
+        });
+
         return (response.newURL);
 
     }
@@ -46,8 +52,21 @@ const shorturl = async(insertedURL: string) => {
 
 }
 
+const redirectURL = async(insertedID: number) => {
+
+    if (insertedID < 1 || insertedID > allURLS.length) {
+
+        throw new Error("Invalid url");
+
+    }
+
+    return (allURLS[insertedID - 1].old_url);
+
+}
+
 const options = {
-    shorturl
+    shorturl,
+    redirectURL
 }
 
 export default options;

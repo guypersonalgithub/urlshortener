@@ -20,6 +20,24 @@ router.post("/", async(req: Request, res: Response) => {
 
     }
 
-})
+});
+
+router.get("/:shorturl", async(req, res) => {
+
+    try {
+
+        const { shorturl } = req.params;
+        const redirectedURL = await logic.redirectURL(parseInt(shorturl));
+        res.redirect(redirectedURL);
+
+    }
+
+    catch (err) {
+
+        res.json(err);
+
+    }
+
+});
 
 export default router;
